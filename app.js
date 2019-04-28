@@ -11,21 +11,22 @@ const server = app.listen(port, () => {
 const io = SocketIO(server)
 
 const pixelData = [
-  ['red', 'aqua', 'blue', 'black'],
-  ['red', 'aqua', 'blue', 'black'],
-  ['red', 'aqua', 'blue', 'black'],
-  ['red', 'aqua', 'blue', 'black']
+  ['red', 'aqua', 'blue', 'black', "pink"],
+  ['red', 'aqua', 'blue', 'black', "pink"],
+  ['red', 'aqua', 'blue', 'black', "pink"],
+  ['red', 'aqua', 'blue', 'black', "pink"],
+  ['red', 'aqua', 'blue', 'black', "pink"]
 ]
 
 io.on('connection', (socket) => {
-  socket.emit('pixel-data', pixelData)
+  socket.emit('initial-pixel-data', pixelData)
 
   socket.on('draw-dot', ({row, col, color}) => {
     pixelData[row][col] = color
     //服务器向其他客户端广播一个事件
-    socket.broadcast.emit('updata-dot', {row, col, color})
+    socket.broadcast.emit('update-dot', {row, col, color})
     //服务器自身接收该事件
-    socket.emit('updata-dot', {row, col, color})
+    socket.emit('update-dot', {row, col, color})
   })
   socket.on('disconnect', () => {
     console.log('someone leaves')
