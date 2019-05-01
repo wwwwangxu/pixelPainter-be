@@ -1,6 +1,7 @@
 const express = require('express')
 const SocketIO = require('socket.io')
 const app = express()
+const path = require('path')
 
 const fs = require('fs')
 
@@ -13,6 +14,8 @@ const server = app.listen(port, () => {
 })
 
 const io = SocketIO(server)
+
+app.use(express.static(path.join(__dirname, '../fe/build')))
 
 // const pixelData = [
 //   ['red', 'aqua', 'blue', 'black', "pink"],
